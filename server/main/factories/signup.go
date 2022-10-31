@@ -1,4 +1,4 @@
-package main
+package factories
 
 import (
 	"github.com/WilliamKSilva/musical-comrade/application/repositories"

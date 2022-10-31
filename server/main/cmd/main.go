@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/WilliamKSilva/musical-comrade/infra/db"
+	"github.com/WilliamKSilva/musical-comrade/main/factories"
 	"github.com/gorilla/mux"
 )
 
@@ -17,7 +18,11 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/user", MakeSignUpHandler(connectionDb))
+	makeSignUpHandler := factories.MakeSignUpHandler(connectionDb)
 
-	fmt.Println(http.ListenAndServe(":3000", router))
+	router.HandleFunc("/user", makeSignUpHandler.SignUpHandler)
+
+	fmt.Println("Running!")
+
+	defer fmt.Println(http.ListenAndServe(":3000", router))
 }
