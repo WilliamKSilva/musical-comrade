@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/WilliamKSilva/musical-comrade/application/usecases"
-	"github.com/WilliamKSilva/musical-comrade/domain"
 )
 
 type SignUpHandler struct {
@@ -12,14 +11,14 @@ type SignUpHandler struct {
 }
 
 func (h *SignUpHandler) SignUpHandler(w http.ResponseWriter, req *http.Request) {
-	var user domain.User
-	err := requestJSON(req, &user)
+	var addAccountData usecases.AddAccountData
+	err := requestJSON(req, &addAccountData)
 
 	if err != nil {
 		panic("Error")
 	}
 
-	createdUser, err := h.AddAccountUseCase.Add(&user)
+	createdUser, err := h.AddAccountUseCase.Add(&addAccountData)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
