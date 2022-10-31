@@ -3,6 +3,7 @@ package usecases
 import (
 	"github.com/WilliamKSilva/musical-comrade/application/repositories"
 	"github.com/WilliamKSilva/musical-comrade/domain"
+	"github.com/google/uuid"
 )
 
 type AddAccountUseCase struct {
@@ -10,7 +11,11 @@ type AddAccountUseCase struct {
 }
 
 func (repo AddAccountUseCase) Add(user *domain.User) (*domain.User, error) {
-	createdUser, err := repo.Add(user)
+	uuid := uuid.New().String()
+
+	user.Id = uuid
+
+	createdUser, err := repo.AccountRepository.Add(user)
 
 	if err != nil {
 		return nil, err

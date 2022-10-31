@@ -13,9 +13,9 @@ type AccountRepositoryDb struct {
 	Db *gorm.DB
 }
 
-func (repo AccountRepositoryDb) Add(user *domain.User) (*domain.User, error) {
+func (database AccountRepositoryDb) Add(user *domain.User) (*domain.User, error) {
 
-	err := repo.Db.Create(user).Error
+	err := database.Db.Create(user).Error
 
 	if err != nil {
 		return nil, err
