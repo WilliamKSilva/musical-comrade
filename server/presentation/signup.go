@@ -8,19 +8,19 @@ import (
 )
 
 type SignUpHandler struct {
-	AddAccountUseCase usecases.AddAccountUseCase
+	AddUserUseCase usecases.AddUserUseCase
 }
 
 func (h *SignUpHandler) SignUpHandler(w http.ResponseWriter, req *http.Request) {
-	var addAccountData usecases.AddAccountData
-	err := utils.RequestJSON(req, &addAccountData)
+	var addUserData usecases.AddUserData
+	err := utils.RequestJSON(req, &addUserData)
 
 	if err != nil {
 		panic("Error")
 	}
 
 	fields := []string{"name", "email", "password", "nickname"}
-	errorMessage, err := utils.FieldValidator(w, &addAccountData, fields)
+	errorMessage, err := utils.FieldValidator(w, &addUserData, fields)
 
 	if errorMessage != "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -32,7 +32,7 @@ func (h *SignUpHandler) SignUpHandler(w http.ResponseWriter, req *http.Request) 
 		panic("Error")
 	}
 
-	createdUser, err := h.AddAccountUseCase.Add(&addAccountData)
+	createdUser, err := h.AddUserUseCase.Add(&addUserData)
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

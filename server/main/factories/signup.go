@@ -8,9 +8,9 @@ import (
 )
 
 func MakeSignUpHandler(db *gorm.DB) presentation.SignUpHandler {
-	accountRepository := repositories.AccountRepositoryDb{Db: db}
-	addAccountUseCase := usecases.AddAccountUseCase{AccountRepository: accountRepository}
-	signUpHandler := presentation.SignUpHandler{AddAccountUseCase: addAccountUseCase}
+	userRepository := repositories.UserRepositoryDb{Db: db}
+	addUserUseCase := usecases.AddUserUseCase{UserRepository: userRepository}
+	signUpHandler := presentation.SignUpHandler{AddUserUseCase: addUserUseCase}
 
 	return signUpHandler
 }

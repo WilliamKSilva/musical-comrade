@@ -5,15 +5,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type AccountRepository interface {
+type UserRepository interface {
 	Add(user *domain.User) (*domain.User, error)
 }
 
-type AccountRepositoryDb struct {
+type UserRepositoryDb struct {
 	Db *gorm.DB
 }
 
-func (database AccountRepositoryDb) Add(user *domain.User) (*domain.User, error) {
+func (database UserRepositoryDb) Add(user *domain.User) (*domain.User, error) {
 
 	err := database.Db.Create(user).Error
 

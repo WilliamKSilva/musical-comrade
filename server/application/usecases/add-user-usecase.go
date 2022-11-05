@@ -6,18 +6,18 @@ import (
 	"github.com/google/uuid"
 )
 
-type AddAccountData struct {
+type AddUserData struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Nickname string `json:"nickname"`
 }
 
-type AddAccountUseCase struct {
-	AccountRepository repositories.AccountRepository
+type AddUserUseCase struct {
+	UserRepository repositories.UserRepository
 }
 
-func (repo AddAccountUseCase) Add(account *AddAccountData) (*domain.User, error) {
+func (repo AddUserUseCase) Add(account *AddUserData) (*domain.User, error) {
 	uuid := uuid.New().String()
 
 	user := domain.User{
@@ -28,7 +28,7 @@ func (repo AddAccountUseCase) Add(account *AddAccountData) (*domain.User, error)
 		Nickname: account.Password,
 	}
 
-	createdUser, err := repo.AccountRepository.Add(&user)
+	createdUser, err := repo.UserRepository.Add(&user)
 
 	if err != nil {
 		return nil, err
