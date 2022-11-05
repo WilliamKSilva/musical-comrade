@@ -11,6 +11,7 @@ const (
 
 type Game struct {
 	Id        string     `gorm:"primaryKey" json:"id"`
+	Answers   []string   `json:"answers"`
 	Status    gameStatus `gorm:"type:game_status"`
 	UserId    string     `json:"user_id"`
 	User      User       `gorm:"foreignKey:UserId"`
