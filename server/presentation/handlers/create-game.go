@@ -1,4 +1,4 @@
-package presentation
+package handlers
 
 import (
 	"context"
@@ -8,33 +8,28 @@ import (
 	"github.com/WilliamKSilva/musical-comrade/presentation/utils"
 )
 
-type SignUpHandler struct {
-	AddUserUseCase usecases.AddUserUseCase
+type CreateGameHandler struct {
+	AddGameUseCase usecases.AddGameUseCase
 }
 
-func (h *SignUpHandler) SignUpHandler(ctx context.Context) http.HandlerFunc {
+func (h CreateGameHandler) CreateGameHandler(ctx context.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		var addUserData usecases.AddUserData
-		err := utils.RequestJSON(req, &addUserData)
+		var addGameData usecases.AddGameData
+
+		fields := []string{"genre", "status"}
+		message, err := utils.FieldValidator(w, &addGameData, fields)
 
 		if err != nil {
 			panic("Error")
 		}
 
-		fields := []string{"name", "email", "password", "nickname"}
-		errorMessage, err := utils.FieldValidator(w, &addUserData, fields)
-
-		if errorMessage != "" {
+		if message != "" {
 			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte(errorMessage))
+			w.Write([]byte(message))
 			return
 		}
 
-		if err != nil {
-			panic("Error")
-		}
-
-		createdUser, err := h.AddUserUseCase.Add(ctx, &addUserData)
+		createdUser, err := h.AddGameUseCase.Add(ctx, &addGameData)
 
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -49,5 +44,4 @@ func (h *SignUpHandler) SignUpHandler(ctx context.Context) http.HandlerFunc {
 			panic("Error")
 		}
 	}
-
 }
