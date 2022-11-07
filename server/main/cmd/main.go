@@ -15,16 +15,16 @@ func main() {
 	mongoClient := db.ConnectDb(ctx)
 
 	database := mongoClient.Database("musical-comrade-db")
-
 	defer mongoClient.Disconnect(ctx)
 
 	router := mux.NewRouter()
 
 	makeSignUpHandler := factories.MakeSignUpHandler(database)
-	makeCreateGameHandler := factories.MakeCreateGameHandler(database)
 
-	router.HandleFunc("/users", makeSignUpHandler.SignUpHandler)
-	router.HandleFunc("/games", makeCreateGameHandler.CreateGameHandler)
+	router.HandleFunc("/users", makeSignUpHandler.SignUpHandler(ctx))
 
-	defer fmt.Println(http.ListenAndServe(":3000", router))
+	fmt.Println("Running!")
+
+	fmt.Println(http.ListenAndServe(":3000", router))
+
 }
