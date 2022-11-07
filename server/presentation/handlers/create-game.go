@@ -29,7 +29,7 @@ func (h CreateGameHandler) CreateGameHandler(ctx context.Context) http.HandlerFu
 			return
 		}
 
-		createdUser, err := h.AddGameUseCase.Add(ctx, &addGameData)
+		createdGame, err := h.AddGameUseCase.Add(ctx, &addGameData)
 
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -38,7 +38,7 @@ func (h CreateGameHandler) CreateGameHandler(ctx context.Context) http.HandlerFu
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		encodeError := utils.ResponseJSON(w, &createdUser)
+		encodeError := utils.ResponseJSON(w, &createdGame)
 
 		if encodeError != nil {
 			panic("Error")
