@@ -7,28 +7,29 @@ import (
 )
 
 type AddGameData struct {
-	Status domain.GameStatus `json:"status"`
-	UserId string            `json:"user_id"`
+	UserId string                `json:"user_id"`
+	Status domain.GameStatus     `json:"status"`
+	Genre  domain.GameMusicGenre `json:"genre"`
 }
 
 type AddGameUseCase struct {
 	GameRepository repositories.GameRepository
 }
 
-func (repo AddGameUseCase) Add(gameData *AddGameData) (*domain.Game, error) {
+func (repo AddGameUseCase) Add(game *AddGameData) (*domain.Game, error) {
 
-	game := domain.Game{
+	gameData := domain.Game{
 		Id:     uuid.New().String(),
-		Status: gameData.Status,
-		UserId: gameData.UserId,
+		Status: game.Status,
+		Genre:  game.Genre,
+		UserId: game.UserId,
 	}
 
-	createdGame, err := repo.GameRepository.Add(&game)
+	createdGame, err := repo.GameRepository.Add(&gameData)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return createdGame, nil
-
 }
