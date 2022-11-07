@@ -6,11 +6,12 @@ services:
     container_name: musical_comrade_db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=docker
-      - MONGO_INITDB_ROOT_PASSWORD=admin      
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=musical_comrade_db      
     expose:
       - "27020"
     ports:
-      - "27020:27020"
+      - "27020:27017"
     volumes:
       - musical-comrade-mongo:/data/db      
 

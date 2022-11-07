@@ -1,14 +1,17 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type User struct {
-	Id        string    `gorm:"primaryKey" json:"id"`
-	Name      string    `json:"name"`
-	Email     string    `json:"email"`
-	Password  string    `json:"password"`
-	Nickname  string    `json:"nickname"`
-	Games     []Game    `gorm:"foreignKey:UserId;type:Game"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Name      string             `bson:"name,omitempty" json:"name"`
+	Email     string             `bson:"email,omitempty" json:"email"`
+	Password  string             `bson:"password,omitempty" json:"password"`
+	Nickname  string             `bson:"nickname,omitempty" json:"nickname"`
+	CreatedAt time.Time          `bson:"created_at,omitempty" json:"created_at"`
+	UpdatedAt time.Time          `bson:"updated_at,omitempty" json:"updated_at"`
 }

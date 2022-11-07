@@ -1,9 +1,10 @@
 package usecases
 
 import (
+	"context"
+
 	"github.com/WilliamKSilva/musical-comrade/application/repositories"
 	"github.com/WilliamKSilva/musical-comrade/domain"
-	"github.com/google/uuid"
 )
 
 type AddUserData struct {
@@ -17,18 +18,16 @@ type AddUserUseCase struct {
 	UserRepository repositories.UserRepository
 }
 
-func (repo AddUserUseCase) Add(account *AddUserData) (*domain.User, error) {
-	uuid := uuid.New().String()
+func (repo AddUserUseCase) Add(ctx context.Context, account *AddUserData) (*domain.User, error) {
 
 	user := domain.User{
-		Id:       uuid,
 		Name:     account.Name,
-		Email:    account.Name,
+		Email:    account.Email,
 		Password: account.Password,
-		Nickname: account.Password,
+		Nickname: account.Nickname,
 	}
 
-	createdUser, err := repo.UserRepository.Add(&user)
+	createdUser, err := repo.UserRepository.Add(ctx, &user)
 
 	if err != nil {
 		return nil, err

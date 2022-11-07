@@ -14,11 +14,3 @@ func MakeSignUpHandler(db *mongo.Database) presentation.SignUpHandler {
 
 	return signUpHandler
 }
-
-func MakeCreateGameHandler(db *mongo.Database) presentation.CreateGameHandler {
-	gameRepository := repositories.GameRepositoryDb{Db: db}
-	addGameUseCase := usecases.AddGameUseCase{GameRepository: gameRepository}
-	createGameHandler := presentation.CreateGameHandler{AddGameUseCase: addGameUseCase}
-
-	return createGameHandler
-}
