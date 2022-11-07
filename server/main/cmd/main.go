@@ -19,10 +19,10 @@ func main() {
 	router := mux.NewRouter()
 
 	makeSignUpHandler := factories.MakeSignUpHandler(connectionDb)
+	makeCreateGameHandler := factories.MakeCreateGameHandler(connectionDb)
 
 	router.HandleFunc("/user", makeSignUpHandler.SignUpHandler)
-
-	fmt.Println("Running!")
+	router.HandleFunc("/game", makeCreateGameHandler.CreateGameHandler)
 
 	defer fmt.Println(http.ListenAndServe(":3000", router))
 }

@@ -15,7 +15,7 @@ func Connect() (*gorm.DB, error) {
 		panic(err)
 	}
 
-	db.AutoMigrate(domain.User{})
+	db.AutoMigrate(domain.User{}, domain.Game{})
 
 	return db, nil
 }

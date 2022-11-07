@@ -14,3 +14,11 @@ func MakeSignUpHandler(db *gorm.DB) presentation.SignUpHandler {
 
 	return signUpHandler
 }
+
+func MakeCreateGameHandler(db *gorm.DB) presentation.CreateGameHandler {
+	gameRepository := repositories.GameRepositoryDb{Db: db}
+	addGameUseCase := usecases.AddGameUseCase{GameRepository: gameRepository}
+	createGameHandler := presentation.CreateGameHandler{AddGameUseCase: addGameUseCase}
+
+	return createGameHandler
+}
