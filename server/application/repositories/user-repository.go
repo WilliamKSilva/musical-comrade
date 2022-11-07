@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"github.com/WilliamKSilva/musical-comrade/domain"
-	"gorm.io/gorm"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type UserRepository interface {
@@ -10,12 +10,12 @@ type UserRepository interface {
 }
 
 type UserRepositoryDb struct {
-	Db *gorm.DB
+	Db *mongo.Database
 }
 
 func (database UserRepositoryDb) Add(user *domain.User) (*domain.User, error) {
 
-	err := database.Db.Create(user).Error
+	err := database.Db.Collection(user)
 
 	if err != nil {
 		return nil, err

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -10,19 +11,20 @@ import (
 )
 
 func main() {
-	connectionDb, err := db.Connect()
+	ctx := context.Background()
+	mongoClient := db.ConnectDb(ctx)
 
-	if err != nil {
-		fmt.Println("Error connecting to database")
-	}
+	database := mongoClient.Database("musical-comrade-db")
+
+	defer mongoClient.Disconnect(ctx)
 
 	router := mux.NewRouter()
 
-	makeSignUpHandler := factories.MakeSignUpHandler(connectionDb)
-	makeCreateGameHandler := factories.MakeCreateGameHandler(connectionDb)
+	makeSignUpHandler := factories.MakeSignUpHandler(database)
+	makeCreateGameHandler := factories.MakeCreateGameHandler(database)
 
-	router.HandleFunc("/user", makeSignUpHandler.SignUpHandler)
-	router.HandleFunc("/game", makeCreateGameHandler.CreateGameHandler)
+	router.HandleFunc("/users", makeSignUpHandler.SignUpHandler)
+	router.HandleFunc("/games", makeCreateGameHandler.CreateGameHandler)
 
 	defer fmt.Println(http.ListenAndServe(":3000", router))
 }

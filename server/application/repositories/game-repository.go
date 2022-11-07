@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"github.com/WilliamKSilva/musical-comrade/domain"
-	"gorm.io/gorm"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type GameRepository interface {
@@ -10,11 +10,11 @@ type GameRepository interface {
 }
 
 type GameRepositoryDb struct {
-	Db *gorm.DB
+	Db *mongo.Database
 }
 
 func (repo GameRepositoryDb) Add(game *domain.Game) (*domain.Game, error) {
-	result := repo.Db.Save(game)
+	result := repo.Db.Collection(game)
 
 	if result.Error != nil {
 		return nil, result.Error
