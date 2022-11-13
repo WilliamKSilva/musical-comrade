@@ -20,8 +20,10 @@ func main() {
 	router := mux.NewRouter()
 
 	makeSignUpHandler := factories.MakeSignUpHandler(database)
+	makeCreateGameHandler := factories.MakeCreateGameHandler(database)
 
 	router.HandleFunc("/users", makeSignUpHandler.SignUpHandler(ctx))
+	router.HandleFunc("/games", makeCreateGameHandler.CreateGameHandler(ctx))
 
 	fmt.Println("Running!")
 
